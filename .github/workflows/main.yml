@@ -10,8 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
+
   build:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -23,20 +24,20 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform-version: 2.0.1
-
-    - name: Initialize Terraform
-      run: terraform init
-
-    - name: Validate Config
-      run: terraform validate
-
-    - name: Initialize TF Plan
-      run: terraform plan
-
-    - name: Apply TF Plan
-      run: terraform apply -auto-approve
+  
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform-version: 2.0.1
+  
+      - name: Initialize Terraform
+        run: terraform init
+  
+      - name: Validate Config
+        run: terraform validate
+  
+      - name: Initialize TF Plan
+        run: terraform plan
+  
+      - name: Apply TF Plan
+        run: terraform apply -auto-approve
