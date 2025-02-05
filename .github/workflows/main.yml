@@ -1,0 +1,36 @@
+name: Terraform AWS
+
+on: 
+ workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+steps:
+- name: checkout code
+uses: actions/checkout@v3
+
+- name: install and config aws
+uses: actions/configure-aws-credentials@v2
+with:
+  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+  aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+  aws-region: us-east-1
+
+- name: setup terraform
+uses: hashicorp/terraform-setup@v2
+with: 
+  terraform_version: 1.5.6
+
+- name: run terraform init
+run: |
+  terraform init
+
+- name: run terraform validate
+run: |
+  terraform validate
+
+- name: run terraform apply
+run: |
+  terraform apply -auto-approve
